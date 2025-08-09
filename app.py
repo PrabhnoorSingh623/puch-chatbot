@@ -12,8 +12,11 @@ app = Flask(__name__)
 def home():
     return "AI Chatbot Server is running."
 
-@app.route("/chat", methods=["POST"])
+@app.route("/chat", methods=["GET", "POST"])
 def chat():
+    if request.method == "GET":
+        return jsonify({"message": "Send a POST request to this endpoint with a JSON body containing a 'message' key."})
+    
     data = request.json
     user_message = data.get("message")
 
@@ -21,7 +24,6 @@ def chat():
         return jsonify({"error": "No message provided"}), 400
 
     try:
-        # Call OpenAI API using old (compatible) method
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
