@@ -18,7 +18,7 @@ def chat():
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a friendly companion to chat with."},
+                {"role": "system", "content": "You are a compassionate, non-judgmental therapist trained to listen and help users with their thoughts and feelings. Do not mention that you are an AI or language model. Always speak empathetically and offer supportive, thoughtful responses."},
                 {"role": "user", "content": user_message}
             ]
         )
