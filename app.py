@@ -2,9 +2,15 @@ from flask import Flask, request, jsonify
 import openai
 import os
 
-openai.api_key = os.environ.get("OPENAI_API_KEY")
+# Get the OpenAI API key from environment variables
+openai.api_key = os.environ.get("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")
 
+# Initialize Flask app
 app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "AI Chatbot Server is running."
 
 @app.route("/chat", methods=["POST"])
 def chat():
@@ -15,6 +21,7 @@ def chat():
         return jsonify({"error": "No message provided"}), 400
 
     try:
+        # Call OpenAI API using old (compatible) method
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
@@ -28,10 +35,6 @@ def chat():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-@app.route("/")
-def home():
-    return "AI Chatbot Server is running."
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
